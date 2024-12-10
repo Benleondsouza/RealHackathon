@@ -11,13 +11,12 @@
             box-sizing: border-box;
         }
 
-        /* Body Styling */
+        /* Body Styling - Dark Mode Only */
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
-            background-color: #f4f4f9;
-            color: #333;
-            transition: background-color 0.3s, color 0.3s;
+            background-color: #1e1e2e;
+            color: #f8f8f2;
         }
 
         /* Header */
@@ -29,18 +28,19 @@
 
         header h1 {
             font-size: 2.5rem;
-            color: #4a90e2; /* Blue */
+            color: #27ae60; /* Green */
         }
 
         /* Section Form Styling */
         section {
             max-width: 400px;
             margin: 2rem auto;
-            background: #fff;
+            background: #282a36;
             padding: 2rem;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border: 2px solid #e67e22; /* Orange */
+            border: 2px solid #27ae60; /* Green */
+            color: #f8f8f2;
         }
 
         section h2 {
@@ -55,12 +55,36 @@
             margin-bottom: 1rem;
             border: 1px solid #ddd;
             border-radius: 5px;
+            background-color: #3a3a4a;
+            color: #f8f8f2;
+        }
+
+        form input::placeholder {
+            color: #bbb;
+        }
+
+        .password-container {
+            position: relative;
+        }
+
+        .password-container input {
+            padding-right: 2.5rem;
+        }
+
+        .password-container .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 36%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #bbb;
+            font-size: 1.4rem;
         }
 
         form button {
             width: 100%;
             padding: 0.75rem;
-            background-color: #e67e22; /* Orange */
+            background-color: #27ae60; /* Green */
             color: #fff;
             border: none;
             border-radius: 5px;
@@ -71,54 +95,13 @@
         }
 
         form button:hover {
-            background-color: #d35400; /* Darker Orange */
+            background-color: #1e874b; /* Darker Green */
         }
 
         #error-message {
             color: red;
             text-align: center;
             font-size: 0.9rem;
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            margin-top: 2rem;
-        }
-
-        #dark-mode-toggle {
-            background-color: #4a90e2; /* Blue */
-            color: #fff;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background-color 0.3s ease;
-        }
-
-        #dark-mode-toggle:hover {
-            background-color: #357abf; /* Darker Blue */
-        }
-
-        /* Dark Mode */
-        body.dark-mode {
-            background-color: #1e1e2e;
-            color: #f8f8f2;
-        }
-
-        body.dark-mode section {
-            background-color: #282a36;
-            color: #f8f8f2;
-            border-color: #27ae60; /* Green */
-        }
-
-        body.dark-mode header h1 {
-            color: #27ae60; /* Green */
-        }
-
-        body.dark-mode #dark-mode-toggle {
-            background-color: #e67e22;
         }
     </style>
 </head>
@@ -133,27 +116,48 @@
             <input type="text" id="name" placeholder="Name" required><br>
             <input type="email" id="email" placeholder="Email" required><br>
             <input type="tel" id="phone" placeholder="Phone Number" required><br>
-            <input type="password" id="password" placeholder="Create Password" required><br>
-            <input type="password" id="confirm-password" placeholder="Confirm Password" required><br>
-            <div>
-                <input type="checkbox" id="show-passwords"> <label for="show-passwords">Show Passwords</label>
+            
+            <!-- Password with toggle icon -->
+            <div class="password-container">
+                <input type="password" id="password" placeholder="Create Password" required>
+                <span class="toggle-password" id="toggle-password">&#128065;</span> <!-- Eye Icon -->
             </div>
+
+            <!-- Confirm Password -->
+            <div class="password-container">
+                <input type="password" id="confirm-password" placeholder="Confirm Password" required>
+                <span class="toggle-password" id="toggle-confirm-password">&#128065;</span> <!-- Eye Icon -->
+            </div>
+
             <button type="submit">Register</button>
             <p id="error-message"></p>
         </form>
     </section>
 
-    <footer>
-        <button id="dark-mode-toggle">🌙 Dark Mode</button>
-    </footer>
-
     <script>
         const registerForm = document.getElementById('register-form');
         const passwordInput = document.getElementById('password');
         const confirmPasswordInput = document.getElementById('confirm-password');
+        const togglePassword = document.getElementById('toggle-password');
+        const toggleConfirmPassword = document.getElementById('toggle-confirm-password');
         const errorMessage = document.getElementById('error-message');
-        const showPasswords = document.getElementById('show-passwords');
-        const darkModeToggle = document.getElementById('dark-mode-toggle');
+
+        // Toggle Password Visibility
+        togglePassword.addEventListener('click', () => {
+            const type = passwordInput.type === 'password' ? 'text' : 'password';
+            passwordInput.type = type;
+
+            // Change the icon
+            togglePassword.textContent = type === 'password' ? '\u{1F441}' : '\u{1F441}\uFE0E'; // Eye icons
+        });
+
+        toggleConfirmPassword.addEventListener('click', () => {
+            const type = confirmPasswordInput.type === 'password' ? 'text' : 'password';
+            confirmPasswordInput.type = type;
+
+            // Change the icon
+            toggleConfirmPassword.textContent = type === 'password' ? '\u{1F441}' : '\u{1F441}\uFE0E';
+        });
 
         // Password Match Validation
         registerForm.addEventListener('submit', (e) => {
@@ -177,20 +181,8 @@
                 localStorage.setItem('user', JSON.stringify(user));
 
                 // Redirect to another page (e.g., skills page)
-                window.location.href = '/skills.html'; // Adjust the path as needed
+                window.location.href = '/mskills.html'; // Adjust the path as needed
             }
-        });
-
-        // Toggle Password Visibility
-        showPasswords.addEventListener('change', () => {
-            const type = showPasswords.checked ? 'text' : 'password';
-            passwordInput.type = type;
-            confirmPasswordInput.type = type;
-        });
-
-        // Dark Mode Toggle
-        darkModeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('dark-mode');
         });
     </script>
 </body>
