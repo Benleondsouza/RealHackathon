@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillSwap Homepage</title>
+    <link rel="stylesheet" href="homepage.css">
+</head>
+<body>
+
+    <!-- Header Section with SkillSwap Name and Search Bar -->
+    <header>
+        <div class="header-container">
+            <h1 id="skillSwapName">SkillSwap</h1>
+            <input type="text" id="search" placeholder="Search for skills...">
+            <button id="dark-mode-toggle" aria-label="Toggle Dark Mode">🌙</button>
+        </div>
+    </header>
+
+    <!-- Current Learning Section -->
+    <section id="current-learning">
+        <h2>Your Current Learning Skills</h2>
+        <div id="current-skills">
+            <!-- Example Skill Boxes (These will be dynamically added later) -->
+            <div class="skill-box">JavaScript</div>
+            <div class="skill-box">HTML</div>
+            <div class="skill-box">CSS</div>
+        </div>
+    </section>
+
+    <!-- Suggested Skills Section -->
+    <section id="suggested-skills">
+        <h2>Suggested Skills</h2>
+        <div id="suggestions">
+            <!-- Example Suggested Skills Cards -->
+            <div class="card">
+                <h3>Python</h3>
+                <p><strong>Instructor:</strong> John Doe</p>
+                <p>Learn Python from scratch with real-world projects!</p>
+            </div>
+            <div class="card">
+                <h3>React</h3>
+                <p><strong>Instructor:</strong> Jane Smith</p>
+                <p>Master React with practical tutorials and build apps!</p>
+            </div>
+            <div class="card">
+                <h3>Node.js</h3>
+                <p><strong>Instructor:</strong> Alex Brown</p>
+                <p>Build powerful back-end systems using Node.js!</p>
+            </div>
+        </div>
+    </section>
+
+    <script src="homepage.js"></script>
+</body>
+</html>
