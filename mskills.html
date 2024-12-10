@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Management</title>
+    <style>
+        /* Global Styling */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #121212; /* Dark theme */
+            color: #00ff6a; /* Green text */
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            padding: 20px;
+        }
+
+        .column {
+            flex: 1;
+            margin: 0 10px;
+            padding: 20px;
+            background-color: #1e1e1e; /* Slightly lighter black */
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .column h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .skills-box {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .skill {
+            background-color: #2d6a4f; /* Dark green */
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .skill.selected {
+            background-color: #00ff6a; /* Bright Green for selected */
+            color: #121212; /* Dark text */
+        }
+
+        .search-bar {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .search-bar input {
+            padding: 10px;
+            width: 70%;
+            margin-right: 10px;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .search-bar button {
+            padding: 10px 20px;
+            background-color: #00ff6a;
+            color: #121212;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar button:hover {
+            background-color: #00cc56; /* Darker green */
+        }
+
+        .next-button {
+            display: block;
+            margin: 30px auto;
+            padding: 15px 30px;
+            background-color: #00ff6a;
+            color: #121212;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .next-button:hover {
+            background-color: #00cc56;
+        }
+    </style>
+</head>
+<body>
+    <h1>Skill Management</h1>
+
+    <div class="container">
+        <div class="column" id="skills-known">
+            <h2>Skills I Know</h2>
+            <div class="skills-box" id="known-skills-box">
+                <!-- Predefined skills for "Skills I Know" -->
+                <div class="skill" onclick="toggleSkill(this, 'known')">HTML</div>
+                <div class="skill" onclick="toggleSkill(this, 'known')">Cooking</div>
+                <div class="skill" onclick="toggleSkill(this, 'known')">Public Speaking</div>
+                <div class="skill" onclick="toggleSkill(this, 'known')">Python</div>
+                <div class="skill" onclick="toggleSkill(this, 'known')">Writing</div>
+                <div class="skill" onclick="toggleSkill(this, 'known')">Painting</div>
+                <div class="skill" onclick="toggleSkill(this, 'known')">Event Management</div>
+                <div class="skill" onclick="toggleSkill(this, 'known')">Problem Solving</div>
+                <div class="skill" onclick="toggleSkill(this, 'known')">Fitness Training</div>
+                <div class="skill" onclick="toggleSkill(this, 'known')">Gardening</div>
+            </div>
+            <div class="search-bar">
+                <input type="text" id="known-skill-input" placeholder="Add a skill you know...">
+                <button onclick="addSkill('known')">Add Skill</button>
+            </div>
+        </div>
+
+        <div class="column" id="skills-learn">
+            <h2>Skills I Want to Learn</h2>
+            <div class="skills-box" id="learn-skills-box">
+                <!-- Predefined skills for "Skills I Want to Learn" -->
+                <div class="skill" onclick="toggleSkill(this, 'learn')">React</div>
+                <div class="skill" onclick="toggleSkill(this, 'learn')">Cooking</div>
+                <div class="skill" onclick="toggleSkill(this, 'learn')">Public Speaking</div>
+                <div class="skill" onclick="toggleSkill(this, 'learn')">Python</div>
+                <div class="skill" onclick="toggleSkill(this, 'learn')">Writing</div>
+                <div class="skill" onclick="toggleSkill(this, 'learn')">Painting</div>
+                <div class="skill" onclick="toggleSkill(this, 'learn')">C++</div>
+                <div class="skill" onclick="toggleSkill(this, 'learn')">Event Management</div>
+                <div class="skill" onclick="toggleSkill(this, 'learn')">Fitness Training</div>
+                <div class="skill" onclick="toggleSkill(this, 'learn')">Gardening</div>
+            </div>
+            <div class="search-bar">
+                <input type="text" id="learn-skill-input" placeholder="Add a skill you want to learn...">
+                <button onclick="addSkill('learn')">Add Skill</button>
+            </div>
+        </div>
+    </div>
+
+    <button class="next-button" onclick="goToNextPage()">Done</button>
+
+    <script>
+        const selectedSkills = {
+            known: [],
+            learn: []
+        };
+
+        function toggleSkill(element, type) {
+            const skill = element.textContent.trim();
+            const index = selectedSkills[type].indexOf(skill);
+
+            if (index === -1) {
+                // Add skill to selected
+                selectedSkills[type].push(skill);
+                element.classList.add('selected');
+            } else {
+                // Remove skill from selected
+                selectedSkills[type].splice(index, 1);
+                element.classList.remove('selected');
+            }
+        }
+
+        function addSkill(type) {
+            const inputId = type === 'known' ? 'known-skill-input' : 'learn-skill-input';
+            const boxId = type === 'known' ? 'known-skills-box' : 'learn-skills-box';
+
+            const skillInput = document.getElementById(inputId);
+            const skillName = skillInput.value.trim();
+
+            if (skillName) {
+                const skillBox = document.createElement('div');
+                skillBox.className = 'skill';
+                skillBox.textContent = skillName;
+                skillBox.onclick = () => toggleSkill(skillBox, type);
+
+                document.getElementById(boxId).appendChild(skillBox);
+                skillInput.value = '';
+            } else {
+                alert('Please enter a skill name!');
+            }
+        }
+
+        function goToNextPage() {
+            localStorage.setItem('selectedSkills', JSON.stringify(selectedSkills));
+            window.location.href = '/homepage.html';
+        }
+    </script>
+</body>
+</html>
